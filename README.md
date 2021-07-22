@@ -15,7 +15,7 @@ A simple version of google photos built using AWS. You can upload photos and sea
 ## Application Flow:
 
 1.	Navigate to S3 hosted application
-<include photo>
+\<include photo>
   
 2.	Upload an image
     - Image uploads to the S3 bucket smart-album-photos-\<id> through API Gateway
