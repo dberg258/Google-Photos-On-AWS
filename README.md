@@ -33,7 +33,7 @@ A simple version of google photos built using AWS. You can upload photos and sea
 
 5.	Submit a search query on the S3 hosted application
     - Query is sent through API Gateway to the lambda function search-photos-\<id>
-<photo>
+\<photo>
   
 6.	Search-photos-\<id> runs:
     - Receives a search query containing object labels (i.e. dog, beach, etc.)
