@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+
+		<title>The HTML5 Herald</title>
+		<meta name="description" content="The HTML5 Herald" />
+		<meta name="author" content="SitePoint" />
+
+		<script type="text/javascript" src="apiGateway-js-sdk/lib/axios/dist/axios.standalone.js"></script>
+		<script type="text/javascript" src="apiGateway-js-sdk/lib/CryptoJS/rollups/hmac-sha256.js"></script>
+		<script type="text/javascript" src="apiGateway-js-sdk/lib/CryptoJS/rollups/sha256.js"></script>
+		<script type="text/javascript" src="apiGateway-js-sdk/lib/CryptoJS/components/hmac.js"></script>
+		<script type="text/javascript" src="apiGateway-js-sdk/lib/CryptoJS/components/enc-base64.js"></script>
+		<script type="text/javascript" src="apiGateway-js-sdk/lib/url-template/url-template.js"></script>
+		<script type="text/javascript" src="apiGateway-js-sdk/lib/apiGatewayCore/sigV4Client.js"></script>
+		<script type="text/javascript" src="apiGateway-js-sdk/lib/apiGatewayCore/apiGatewayClient.js"></script>
+		<script type="text/javascript" src="apiGateway-js-sdk/lib/apiGatewayCore/simpleHttpClient.js"></script>
+		<script type="text/javascript" src="apiGateway-js-sdk/lib/apiGatewayCore/utils.js"></script>
+		<script type="text/javascript" src="apiGateway-js-sdk/apigClient.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	</head>
+
+	<body>
+		<h1>Smart Photo Album</h1>
+		<div>
+			<input type="file" id="fileUpload" />
+		</div>
+		<div>
+			<button onclick="s3upload()">Submit</button>
+        </div>
+        <div><p id="uploadResponse"></p></div>
+		<br /><br />
+		<div>
+			<form id="search-form" action="javascript:void(0);">
+				<input type="search" id="search" placeholder="Search Photos" />
+			</form>
+			<button id="transcribe-btn"><i class="fa fa-microphone"></i></button>
+			
+        </div>
+        <br>
+        <br>
+        <div id="photos"></div>
+
+        <script src="./submit.js"></script>
+        <!-- <script src="./main.js"></script> -->
+	</body>
+</html>
