@@ -1,37 +1,79 @@
-## Welcome to GitHub Pages
+A simple version of google photos built using AWS. You can upload photos and search for them using objects that are in the images. 
 
-You can use the [editor on GitHub](https://github.com/dberg258/Google-Photos-On-AWS/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+## AWS Components:
+-	Lambda 
+-	Rekognition
+-	Elasticsearch
+-	S3
+-	EventBridge
+-	CloudTrail
+-	API Gateway
+-	CloudFormation
+-	CodeCommit
+-	CodePipeline
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## Application Flow:
 
-### Markdown
+1.	Navigate to S3 hosted application
+<include photo>
+  
+2.	Upload an image
+    - Image uploads to the S3 bucket smart-album-photos-987 through API Gateway
+  
+3.	EventBridge event rule name triggers
+    - Triggers anytime an object is added to the S3 bucket smart-album-photos-987
+    - Triggers the lambda function index-photos-987
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+4.	Index-photos-987 runs: 
+    - Receives a bucket name and bucket object id corresponding to the recently uploaded image
+    - Calls Rekognition with the given image
+    - Rekognition returns labels of common objects found in the image
+    - Forms a json document with the bucket name, bucket object id, current timestamp and object labels returned from Rekognition
+    - Uploads the json document to the Elasticsearch index photos
 
-```markdown
-Syntax highlighted code block
+5.	Submit a search query on the S3 hosted application
+    - Query is sent through API Gateway to the lambda function search-photos-987
+<photo>
+  
+6.	Search-photos-987 runs:
+    - Receives a search query containing object labels (i.e. dog, beach, etc.)
+    - Queries the Elasticsearch photos index for documents with the provided object labels
+    - Generates presigned S3 urls for the images returned by the query
+    - Returns a json document with these urls
 
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/dberg258/Google-Photos-On-AWS/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+  
+## Build
+  
+  This repository contains CloudFormation templates to build the application. 
+  
+  1. Many AWS resources require a unique name. In /Templates/template_1.yaml, /Templates/template_2.yaml, /Lambdas/sam.yaml, /Lambdas/buildspec.yaml, /Lambdas/lambda_function_search.py, /Lambdas/lambda_function_index.py and /Frontend/submit.js, replace all instances of \<id> with a 3 digit number.
+  
+  2. In /Lambdas/sam.yaml, replace \<account-id> with your account id.
+  
+  3. Create 2 repositories in Code Commit with the names:
+      - google-photos-lambdas
+          - Upload all of the files in /Lambdas/ to this repository.
+      - google-photos-frontend
+          - Upload all of the files in /Frontend/ to this repository.
+  
+  4. Set up a CloudTrail trail for the S3 bucket smart-album-photos-\<id>. Instruction can be found [here](https://docs.aws.amazon.com/codepipeline/latest/userguide/create-cloudtrail-S3-source-console.html) under "to create a trail."
+  
+  5. Create a stack in CloudFormation using /Templates/template_1.yaml.
+  
+  6. Upon completion of the stack in step 5 and the release stage of the CodePipeline google-photos-stage-1 (which is created by the stack in step 5), create a stack in CloudFormation using /Templates/template_2.yaml.
+  
+  7. Upon completion of the stack in step 6, navigate to the google-photos-api in API Gateway and retrieive the: 
+      - Invoke-url from the prod stage
+      - API key
+  
+  8. In the google-photos-frontend CodeCommit repository edit:
+    - /submit.js: 
+      - Populate the api_key and api_url vairables with the values retireved from step 7
+    - /apiGateway-js-sdk/apigClient.js
+      - Populate the invokeUrl variable with the invoke-url values from step 7
+  
+  9. Commit the changes made in step 8. The google-photos-stage-2 pipeline will automatically run and apply the changes to the static website hosted in S3.
+  
+  10. The application is now ready. Navingate to bucket url of smart-photo-album-frontend-\<id>.
+    
+  
