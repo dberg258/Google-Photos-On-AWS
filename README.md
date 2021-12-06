@@ -12,6 +12,10 @@ A simple version of google photos built using AWS. You can upload photos and sea
 -	CodeCommit
 -	CodePipeline
 
+## Architecture
+![](https://imgur.com/D4pWWWO.jpg)
+
+
 ## Application Flow:
 
 1.	Navigate to S3 hosted application
