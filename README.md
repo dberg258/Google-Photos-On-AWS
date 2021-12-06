@@ -1,6 +1,6 @@
 A simple version of google photos built using AWS. You can upload photos and search for them by searching for common objects present in the images (i.e. dog).
 
-## AWS Components:
+## AWS Components
 -	Lambda 
 -	Rekognition
 -	Elasticsearch
@@ -16,7 +16,7 @@ A simple version of google photos built using AWS. You can upload photos and sea
 ![](https://imgur.com/D4pWWWO.jpg)
 
 
-## Application Flow:
+## Application Flow
 
 1.	Navigate to S3 hosted application
 \<include photo>
