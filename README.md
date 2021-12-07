@@ -63,12 +63,12 @@ A simple version of google photos built using AWS. You can upload photos and sea
           - Unzip Lambdas.zip and upload all of the files in /Lambdas/ to this repository.
       - google-photos-frontend
           - Upload all of the files in /Frontend/ to this repository.
+ 
+  4. Create a stack in CloudFormation using /Templates/template_1.yaml.
   
-  4. Set up a CloudTrail trail for the S3 bucket smart-album-photos-\<id>. Instruction can be found [here](https://docs.aws.amazon.com/codepipeline/latest/userguide/create-cloudtrail-S3-source-console.html) under "to create a trail."
+  5. Upon completion of the stack in step 4, set up a CloudTrail trail for the S3 bucket smart-album-photos-<id>. Instruction can be found [here](https://docs.aws.amazon.com/codepipeline/latest/userguide/create-cloudtrail-S3-source-console.html) under "to create a trail."
   
-  5. Create a stack in CloudFormation using /Templates/template_1.yaml.
-  
-  6. Upon completion of the stack in step 5 and the release stage of the CodePipeline google-photos-stage-1 (which is created by the stack in step 5), create a stack in CloudFormation using /Templates/template_2.yaml.
+  6. Upon completion of the release stage of the CodePipeline google-photos-stage-1 (which is created by the stack in step 4), create another stack in CloudFormation using /Templates/template_2.yaml.
   
   7. Upon completion of the stack in step 6, navigate to the google-photos-api in API Gateway and retrieve the: 
       - Invoke-url from the prod stage
