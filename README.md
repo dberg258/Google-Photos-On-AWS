@@ -22,13 +22,12 @@ A simple version of google photos built using AWS. You can upload photos and sea
 
 ## Application Flow
 
-1.	Navigate to S3 hosted application
-\<include photo>
+1.	Navigate to S3 hosted static website
   
 2.	Upload an image
     - Image uploads to the S3 bucket smart-album-photos-\<id> through API Gateway
   
-3.	EventBridge event rule ---- triggers
+3.	EventBridge S3 event rule triggers
     - Triggers anytime an object is added to the S3 bucket smart-album-photos-\<id>
     - Triggers the lambda function index-photos-\<id>
 
@@ -37,11 +36,10 @@ A simple version of google photos built using AWS. You can upload photos and sea
     - Calls Rekognition with the given image
     - Rekognition returns labels of common objects found in the image
     - Forms a json document with the bucket name, bucket object id, current timestamp and object labels returned from Rekognition
-    - Uploads the json document to the Elasticsearch index photos
+    - Uploads the json document to the photod Elasticsearch index
 
 5.	Submit a search query on the S3 hosted application
     - Query is sent through API Gateway to the lambda function search-photos-\<id>
-\<photo>
   
 6.	Search-photos-\<id> runs:
     - Receives a search query containing object labels (i.e. dog, beach, etc.)
@@ -66,7 +64,7 @@ A simple version of google photos built using AWS. You can upload photos and sea
  
   4. Create a stack in CloudFormation using /Templates/template_1.yaml.
   
-  5. Upon completion of the stack in step 4, set up a CloudTrail trail for the S3 bucket smart-album-photos-<id>. Instruction can be found [here](https://docs.aws.amazon.com/codepipeline/latest/userguide/create-cloudtrail-S3-source-console.html) under "to create a trail."
+  5. Upon completion of the stack in step 4, set up a CloudTrail trail for the S3 bucket smart-album-photos-\<id>. Instruction can be found [here](https://docs.aws.amazon.com/codepipeline/latest/userguide/create-cloudtrail-S3-source-console.html) under "to create a trail."
   
   6. Upon completion of the release stage of the CodePipeline google-photos-stage-1 (which is created by the stack in step 4), create another stack in CloudFormation using /Templates/template_2.yaml.
   
