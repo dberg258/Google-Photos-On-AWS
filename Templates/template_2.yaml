@@ -3,15 +3,15 @@ Parameters:
   SearchLambdaName:
     Description: name of search lambda function from stage 1
     Type: String
-    Default: search-photos-987
+    Default: search-photos-<id>
   IndexLambdaName:
     Description: name of index lambda function from stage 1
     Type: String
-    Default: index-photos-987
+    Default: index-photos-<id>
   PhotoAlbumS3Name:
     Description: bucket for photos
     Type: String
-    Default: smart-album-photos-987
+    Default: smart-album-photos-<id>
   FrontendBranchName:
     Description: CodeCommit branch name
     Type: String
@@ -27,13 +27,13 @@ Parameters:
   FrontendCodePipelineArtifactS3Name:
     Description: codepipeline artifact s3 bucket
     Type: String
-    Default: codepipeline-artifacts-frontend-987
+    Default: codepipeline-artifacts-frontend-<id>
   FrontendBucketName:
     Type: String
-    Default: smart-photo-album-frontend-987
+    Default: smart-photo-album-frontend-<id>
   EsName:
     Type: String
-    Default: smart-photo-album-es-987
+    Default: smart-photo-album-es-<id>
 
 Resources:
   SearchLambdaAlias:
