@@ -15,11 +15,11 @@ Parameters:
   CodePipelineArtifactS3Name:
     Description: codepipeline artifact s3 bucket
     Type: String
-    Default: codepipeline-artifacts-987
+    Default: codepipeline-artifacts-\<id>
   SamArtifactBucketName:
     Description: sam artifact s3 bucket name
     Type: String
-    Default: sam-artifact-987
+    Default: sam-artifact-\<id>
 
 Resources:
   LambdaSearchRole:
